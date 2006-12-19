@@ -1,0 +1,86 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: debian-glibc@lists.debian.org\n"
+"POT-Creation-Date: 2006-04-06 21:47+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: multiselect
+#. Choices
+#: ../debhelper.in/locales.templates:4
+msgid "All locales"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../debhelper.in/locales.templates:5
+msgid "Locales to be generated:"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../debhelper.in/locales.templates:5
+msgid ""
+"Locale is a framework to switch between multiple languages for users who can "
+"select to use their language, country, characters, collation order, etc."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../debhelper.in/locales.templates:5
+msgid ""
+"Choose which locales to generate.  The selection will be saved to `/etc/"
+"locale.gen', which you can also edit manually (you need to run `locale-gen' "
+"afterwards)."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../debhelper.in/locales.templates:5
+msgid ""
+"When `All locales' is selected, /etc/locale.gen will be set as a symlink to /"
+"usr/share/i18n/SUPPORTED."
+msgstr ""
+
+#. Type: select
+#. Choices
+#: ../debhelper.in/locales.templates:19
+msgid "None"
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../debhelper.in/locales.templates:21
+msgid "Default locale for the system environment:"
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../debhelper.in/locales.templates:21
+msgid ""
+"Many packages in Debian use locales to display text in the correct language "
+"for users. You can change the default locale if you're not a native English "
+"speaker. These choices are based on which locales you have chosen to "
+"generate."
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../debhelper.in/locales.templates:21
+msgid ""
+"Note: This will select the language for your whole system. If you're running "
+"a multi-user system where not all of your users speak the language of your "
+"choice, then they will run into difficulties and you might want not to set a "
+"default locale."
+msgstr ""
