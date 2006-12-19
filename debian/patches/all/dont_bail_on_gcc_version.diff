@@ -1,0 +1,15 @@
+--- glibc-2.4/configure.orig	2006-06-27 16:50:17.000000000 +0400
++++ glibc-2.4/configure	2006-06-27 16:50:26.000000000 +0400
+@@ -4226,9 +4226,9 @@
+   echo "$as_me:$LINENO: result: $ac_prog_version" >&5
+ echo "${ECHO_T}$ac_prog_version" >&6
+ fi
+-if test $ac_verc_fail = yes; then
+-  critic_missing="$critic_missing gcc"
+-fi
++#if test $ac_verc_fail = yes; then
++#  critic_missing="$critic_missing gcc"
++#fi
+ 
+ for ac_prog in gnumake gmake make
+ do
