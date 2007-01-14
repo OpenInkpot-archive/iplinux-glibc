@@ -1,0 +1,12 @@
+--- ports/sysdeps/mips/bits/wordsize.h.orig     2007-01-14 01:37:14.441696352 +0300
++++ ports/sysdeps/mips/bits/wordsize.h  2007-01-14 01:37:58.857944056 +0300
+@@ -16,4 +16,8 @@
+    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+    02111-1307 USA.  */
+ 
++#ifdef _MIPS_SZPTR
+ #define __WORDSIZE     _MIPS_SZPTR
++#else
++#define __WORDSIZE 32
++#endif
+

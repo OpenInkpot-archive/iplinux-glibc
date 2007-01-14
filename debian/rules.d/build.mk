@@ -17,6 +17,10 @@ else
 install_target := install
 endif
 
+ifeq ($(DEB_CROSS_BOOTSTRAP),yes)
+  BUILD_CFLAGS += -DBOOTSTRAP_GCC
+endif
+
 $(patsubst %,mkbuilddir_%,$(GLIBC_PASSES)) :: mkbuilddir_% : $(stamp)mkbuilddir_%
 $(stamp)mkbuilddir_%: $(stamp)patch-stamp $(KERNEL_HEADER_DIR)
 	@echo Making builddir for $(curpass)
