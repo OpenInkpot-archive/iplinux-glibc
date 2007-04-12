@@ -1,0 +1,13 @@
+See http://sources.redhat.com/ml/libc-alpha/2003-05/msg00051.html
+
+--- math/Makefile.orig	2006-08-28 16:23:57.000000000 +0000
++++ math/Makefile	2006-08-28 16:24:50.000000000 +0000
+@@ -38,6 +38,8 @@
+ extra-libs	:= libm
+ extra-libs-others = $(extra-libs)
+ 
++libm.so-no-z-defs = yes
++
+ libm-support = k_standard s_lib_version s_matherr s_signgam		\
+ 	       fclrexcpt fgetexcptflg fraiseexcpt fsetexcptflg		\
+ 	       ftestexcept fegetround fesetround fegetenv feholdexcpt	\
