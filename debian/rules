@@ -133,7 +133,7 @@ curpass = $(filter-out %_,$(subst _,_ ,$@))
 
 DEB_ARCH_REGULAR_PACKAGES = $(libc) $(libc)-dev
 #$(libc)-dbg $(libc)-prof $(libc)-pic locales-all
-DEB_INDEP_REGULAR_PACKAGES =
+DEB_INDEP_REGULAR_PACKAGES = glibc-source
 #glibc-doc locales
 DEB_UDEB_PACKAGES = $(libc)-udeb libnss-dns-udeb libnss-files-udeb
 
@@ -194,7 +194,7 @@ binary-arch: build testroot debian/control $(build-tree) \
 
 binary: binary-indep binary-arch
 
-build:	$(patsubst %,$(stamp)build_%,$(GLIBC_PASSES)) \
+build: binary-source $(patsubst %,$(stamp)build_%,$(GLIBC_PASSES)) \
 	$(patsubst %,$(stamp)check_%,$(GLIBC_PASSES))
 
 testroot:
