@@ -1,6 +1,6 @@
 Package: @libc@
 Architecture: @archs@
-Section: libs
+Section: core
 Priority: required
 Provides: ${locale-compat:Depends}
 Description: GNU C Library: Shared libraries
@@ -10,7 +10,7 @@ Description: GNU C Library: Shared libraries
 
 Package: @libc@-dev
 Architecture: @archs@
-Section: libdevel
+Section: host-tools
 Priority: standard
 Depends: @libc@ (= ${Source-Version})
 Recommends: gcc | c-compiler
@@ -20,7 +20,7 @@ Description: GNU C Library: Development Libraries and Header Files
 
 Package: @libc@-dbg
 Architecture: @archs@
-Section: libdevel
+Section: debug
 Priority: extra
 Provides: libc-dbg
 Depends: @libc@ (= ${Source-Version})
@@ -34,7 +34,7 @@ Description: GNU C Library: Libraries with debugging symbols
 
 Package: @libc@-prof
 Architecture: @archs@
-Section: libdevel
+Section: debug
 Priority: extra
 Depends: @libc@ (= ${Source-Version})
 Description: GNU C Library: Profiling Libraries
@@ -43,7 +43,7 @@ Description: GNU C Library: Profiling Libraries
 
 Package: @libc@-pic
 Architecture: @archs@
-Section: libdevel
+Section: host-tools
 Priority: optional
 Conflicts: libc-pic
 Provides: libc-pic, glibc-pic

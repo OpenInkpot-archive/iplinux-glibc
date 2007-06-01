@@ -1,5 +1,5 @@
 Source: glibc
-Section: libs
+Section: host-tools
 Priority: required
 Build-Depends: gettext, make (>= 3.80-1), dpkg-dev (>= 1.13.5), bzip2, file,
  linux-kernel-headers (>= 2.6.13+0rc3-2) [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
@@ -26,7 +26,7 @@ Description: GNU C Library: Documentation
 
 Package: locales
 Architecture: all
-Section: libs
+Section: core
 Priority: standard
 Depends: ${locale:Depends}, debconf | debconf-2.0
 Conflicts: base-config, belocs-locales-bin, belocs-locales-data
@@ -43,7 +43,7 @@ Description: GNU C Library: National Language (locale) data [support]
 
 Package: locales-all
 Architecture: any
-Section: libs
+Section: core
 Priority: extra
 Depends: ${locale:Depends}
 Provides: locales
@@ -66,7 +66,7 @@ Description: GNU C Library: Name Service Cache Daemon
 
 Package: libc6
 Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
-Section: libs
+Section: core
 Priority: required
 Provides: ${locale-compat:Depends}
 Description: GNU C Library: Shared libraries
@@ -76,7 +76,7 @@ Description: GNU C Library: Shared libraries
 
 Package: libc6-dev
 Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
-Section: libdevel
+Section: host-tools
 Priority: standard
 Depends: libc6 (= ${Source-Version})
 Recommends: gcc | c-compiler
@@ -86,7 +86,7 @@ Description: GNU C Library: Development Libraries and Header Files
 
 Package: libc6-dev-headers
 Architecture: amd64 arm i386 m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
-Section: libdevel
+Section: host-tools
 Priority: optional
 Description: GNU C Library: Header Files only
  Contains the headers needed to bootstrap toolchains with this glibc
@@ -94,7 +94,7 @@ Description: GNU C Library: Header Files only
 
 Package: libc6-dbg
 Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
-Section: libdevel
+Section: debug
 Priority: extra
 Provides: libc-dbg
 Depends: libc6 (= ${Source-Version})
@@ -108,7 +108,7 @@ Description: GNU C Library: Libraries with debugging symbols
 
 Package: libc6-prof
 Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
-Section: libdevel
+Section: debug
 Priority: extra
 Depends: libc6 (= ${Source-Version})
 Description: GNU C Library: Profiling Libraries
@@ -117,7 +117,7 @@ Description: GNU C Library: Profiling Libraries
 
 Package: libc6-pic
 Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
-Section: libdevel
+Section: host-tools
 Priority: optional
 Conflicts: libc-pic
 Provides: libc-pic, glibc-pic

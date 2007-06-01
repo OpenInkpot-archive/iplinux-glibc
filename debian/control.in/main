@@ -1,5 +1,5 @@
 Source: @glibc@
-Section: libs
+Section: host-tools
 Priority: required
 Build-Depends: gettext, make (>= 3.80-1), dpkg-dev (>= 1.13.5), bzip2, file,
  linux-kernel-headers (>= 2.6.13+0rc3-2) [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
@@ -26,7 +26,7 @@ Description: GNU C Library: Documentation
 
 Package: locales
 Architecture: all
-Section: libs
+Section: core
 Priority: standard
 Depends: ${locale:Depends}, debconf | debconf-2.0
 Conflicts: base-config, belocs-locales-bin, belocs-locales-data
@@ -43,7 +43,7 @@ Description: GNU C Library: National Language (locale) data [support]
 
 Package: locales-all
 Architecture: any
-Section: libs
+Section: core
 Priority: extra
 Depends: ${locale:Depends}
 Provides: locales
