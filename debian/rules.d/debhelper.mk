@@ -194,6 +194,12 @@ $(stamp)debhelper:
 	      if [ $(DEB_HOST_ARCH) != $(DEB_BUILD_ARCH) ]; then \
 	        sed -i "/^.*librpcsvc.a.*/d" $$z ; \
 	      fi ; \
+	      if [ "$(DEB_CROSS_BOOTSTRAP)" == "second" ]; then \
+	        sed -i \
+		  -e "/^.*sbin\/ldconfig*/d" \
+		  -e "/^.*bin\/ldd*/d" \
+			$$z ; \
+	      fi ; \
 	      ;; \
 	    debian/$(libc).preinst) \
 	      l=`LANG=C LC_ALL=C readelf -l debian/tmp-libc/usr/bin/iconv | grep "interpreter" | sed -e 's/.*interpreter: \(.*\)]/\1/g'`; \
