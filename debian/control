@@ -71,7 +71,7 @@ Description: GNU C Library: Name Service Cache Daemon
  slow Services like LDAP, NIS or NIS+
 
 Package: libc6
-Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
+Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb sh4a
 Section: core
 Priority: required
 Provides: ${locale-compat:Depends}
@@ -81,7 +81,7 @@ Description: GNU C Library: Shared libraries
  and the standard math library, as well as many others.
 
 Package: libc6-dev
-Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
+Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb sh4a
 Section: host-tools
 Priority: standard
 Depends: libc6 (= ${Source-Version})
@@ -91,7 +91,7 @@ Description: GNU C Library: Development Libraries and Header Files
  and link programs which use the standard C library.
 
 Package: libc6-dev-headers
-Architecture: amd64 arm i386 m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
+Architecture: amd64 arm i386 m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb sh4a
 Section: host-tools
 Priority: optional
 Description: GNU C Library: Header Files only
@@ -99,7 +99,7 @@ Description: GNU C Library: Header Files only
  package.
 
 Package: libc6-dbg
-Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
+Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb sh4a
 Section: debug
 Priority: extra
 Provides: libc-dbg
@@ -113,7 +113,7 @@ Description: GNU C Library: Libraries with debugging symbols
  Most people will not need this package.
 
 Package: libc6-prof
-Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
+Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb sh4a
 Section: debug
 Priority: extra
 Depends: libc6 (= ${Source-Version})
@@ -122,7 +122,7 @@ Description: GNU C Library: Profiling Libraries
  with gprof.
 
 Package: libc6-pic
-Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
+Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb sh4a
 Section: host-tools
 Priority: optional
 Conflicts: libc-pic
@@ -137,7 +137,7 @@ Description: GNU C Library: PIC archive library
 
 Package: libc6-udeb
 XC-Package-Type: udeb
-Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
+Architecture: amd64 arm arm-softfloat armeb i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb sh4a
 Section: debian-installer
 Priority: extra
 Provides: libc6, libc-udeb, ${locale-compat:Depends}
