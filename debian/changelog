@@ -1,3 +1,9 @@
+glibc (2.6-1) experimental; urgency=low
+
+  * Ported debian's glibc 2.6-2 build, keeping local changes intact.
+
+ -- Alexander Shishkin <virtuoso@slind.org>  Tue, 11 Sep 2007 13:37:32 +0400
+
 glibc (2.4-1) experimental; urgency=low
 
   * New upstream version.
