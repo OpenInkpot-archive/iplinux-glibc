@@ -93,7 +93,7 @@ all/make-install-lib-all.patch -p1
 all/libm-no-z-defs.patch -p0
 all/dont_bail_on_gcc_version.diff -p1
 all/local-pthread-manpages.diff 
-#all/local-remove-manual.diff
+all/local-remove-manual.diff
 all/local-ru_RU.diff 
 all/local-pt_BR.diff 
 
