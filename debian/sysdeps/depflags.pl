@@ -164,6 +164,10 @@ if ($libc ne "libc6") {
     push @{$libc_dev_c{'Provides'}}, 'libc6-dev';
 }
 
+# Mark ourselves as proveders of iconv() implementation, to
+# make sure we don't have libiconv installed
+push @{$libc_dev_c{'Provides'}}, 'libiconv-dev';
+
 # Conflict with broken libterm-readline-gnu-perl to avoid #326856.
 push @{$libc_c{'Conflicts'}}, 'libterm-readline-gnu-perl (<< 1.15-2)';
 
