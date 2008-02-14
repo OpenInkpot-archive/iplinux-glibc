@@ -1,3 +1,9 @@
+glibc (2.6-2) experimental; urgency=low
+
+  * Add patch to specify argv0 for ld.so.
+
+ -- Alexander Shishkin <virtuoso@slind.org>  Thu, 14 Feb 2008 12:20:31 +0300
+
 glibc (2.6-1) experimental; urgency=low
 
   * Ported debian's glibc 2.6-2 build, keeping local changes intact.
