@@ -137,6 +137,7 @@ any/local-tcsetaddr.diff -p0
 any/local-tst-mktime2.diff -p0
 any/local-version-sanity.diff -p0
 any/local-dynamic-resolvconf.diff -p0
+any/rtld-allow-specifying-argv0.diff -p1
 any/submitted-nis-netgrp.diff -p0
 any/submitted-getcwd-sys_param_h.diff -p0
 any/submitted-clock-settime.diff -p0
