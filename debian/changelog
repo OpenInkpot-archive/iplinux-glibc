@@ -1,3 +1,10 @@
+glibc (2.6-3) experimental; urgency=low
+
+  * armel added to the packages' architectures list.
+  * Added debian/sysdeps/armel.mk
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Tue, 22 Apr 2008 03:12:46 +0700
+
 glibc (2.6-2) experimental; urgency=low
 
   * Add patch to specify argv0 for ld.so.
