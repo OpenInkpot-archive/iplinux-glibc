@@ -88,8 +88,8 @@ docdir=$(prefix)/share/doc
 mandir=$(prefix)/share/man
 sbindir=$(prefix)/sbin
 
-BUILD_CC = gcc-4.3
-BUILD_CXX = g++-4.3
+BUILD_CC = gcc
+BUILD_CXX = g++
 
 RUN_TESTSUITE = yes
 
