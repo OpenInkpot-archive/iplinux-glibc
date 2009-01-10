@@ -11,6 +11,11 @@ define logme
 (exec 3>&1; exit `( ( ( $(2) ) 2>&1 3>&-; echo $$? >&4) | tee $(1) >&3) 4>&1`)
 endef
 
+ifeq ($(GLIBC_PASSES),libc-second)
+	install_target := install-lib-all
+else
+	install_target := install
+endif
 
 $(patsubst %,mkbuilddir_%,$(GLIBC_PASSES)) :: mkbuilddir_% : $(stamp)mkbuilddir_%
 $(stamp)mkbuilddir_%: $(stamp)patch-stamp $(KERNEL_HEADER_DIR)
@@ -84,13 +89,15 @@ $(stamp)configure_%: $(stamp)mkbuilddir_%
 $(patsubst %,build_%,$(GLIBC_PASSES)) :: build_% : $(stamp)build_%
 $(stamp)build_%: $(stamp)configure_%
 	@echo Building $(curpass)
-	$(call logme, -a $(log_build), $(MAKE) -C $(DEB_BUILDDIR) $(NJOBS))
-	$(call logme, -a $(log_build), echo "---------------" ; echo -n "Build ended: " ; date --rfc-2822)
+	if [ $(curpass) = libc ] || [ $(curpass) = libc-second ]; then \
+	  $(call logme, -a $(log_build), $(MAKE) -C $(DEB_BUILDDIR) $(NJOBS)); \
+	  $(call logme, -a $(log_build), echo "---------------" ; echo -n "Build ended: " ; date --rfc-2822); \
+	fi
 	if [ $(curpass) = libc ]; then \
 	  $(MAKE) -C $(DEB_BUILDDIR) $(NJOBS) \
 	    objdir=$(DEB_BUILDDIR) install_root=$(CURDIR)/build-tree/locales-all \
-	    localedata/install-locales; \
-	  tar --use-compress-program /usr/bin/lzma --owner root --group root -cf $(CURDIR)/build-tree/locales-all/supported.tar.lzma -C $(CURDIR)/build-tree/locales-all/usr/lib/locale .; \
+	      localedata/install-locales; \
+	    tar --use-compress-program /usr/bin/lzma --owner root --group root -cf $(CURDIR)/build-tree/locales-all/supported.tar.lzma -C $(CURDIR)/build-tree/locales-all/usr/lib/locale .; \
 	fi
 	touch $@
 
@@ -128,8 +135,49 @@ $(patsubst %,install_%,$(GLIBC_PASSES)) :: install_% : $(stamp)install_%
 $(stamp)install_%: $(stamp)check_%
 	@echo Installing $(curpass)
 	rm -rf $(CURDIR)/debian/tmp-$(curpass)
-	$(MAKE) -C $(DEB_BUILDDIR) \
-	  install_root=$(CURDIR)/debian/tmp-$(curpass) install
+	mkdir -p $(DEB_BUILDDIR)/elf
+	if [ $(curpass) = libc-headers ]; then \
+		CC="$(call xx,CC)" \
+		$(MAKE) -C $(DEB_BUILDDIR) $(NJOBS) \
+		  CC="$(call xx,CC)" \
+		  $(DEB_BUILDDIR)/sysdeps/gnu/errlist.c 2>&1; \
+		mkdir -p $(DEB_BUILDDIR)/stdio-common; \
+		touch $(DEB_BUILDDIR)/stdio-common/errlist-compat.c; \
+		mkdir $(DEB_BUILDDIR)/rpcsvc; \
+		touch $(DEB_BUILDDIR)/rpcsvc/bootparam.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/bootparam_prot.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/key_prot.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/klm_prot.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/mount.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/nfs_prot.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/nis_callback.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/nis.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/nislib.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/nis_tags.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/nlm_prot.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/rex.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/rquota.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/rstat.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/rusers.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/sm_inter.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/spray.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/ypclnt.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/yp.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/yppasswd.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/yp_prot.h; \
+		touch $(DEB_BUILDDIR)/rpcsvc/ypupd.h; \
+	else \
+       $(MAKE) -C $(DEB_BUILDDIR) \
+         install_root=$(CURDIR)/debian/tmp-$(curpass) $(install_target); \
+	fi
+
+	# Install headers no matter what
+	$(MAKE) -C $(DEB_BUILDDIR) $(NJOBS) \
+	  CC="$(call xx,CC)" \
+	  install_root=$(CURDIR)/debian/tmp-$(curpass) prefix=/usr install-headers; \
+	  cp $(DEB_SRCDIR)/include/gnu/stubs.h $(CURDIR)/debian/tmp-$(curpass)/usr/include/gnu; \
+	  cp $(DEB_BUILDDIR)/bits/stdio_lim.h $(CURDIR)/debian/tmp-$(curpass)/usr/include/bits; \
+	  cp $(DEB_BUILDDIR)/misc/syscall-list.h $(CURDIR)/debian/tmp-$(curpass)/usr/include/bits/syscall.h
 
 	# Generate the list of SUPPORTED locales
 	if [ $(curpass) = libc ]; then \

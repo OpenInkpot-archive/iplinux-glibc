@@ -95,13 +95,18 @@ RUN_TESTSUITE = yes
 
 TIMEOUTFACTOR = 1
 
-# Set CC and CXX for cross-compiling
-ifneq ($(DEB_HOST_ARCH),$(DEB_BUILD_ARCH))
-CC     = $(DEB_HOST_GNU_TYPE)-gcc
-CXX    = $(DEB_HOST_GNU_TYPE)-g++
+ifeq ($(DEB_CROSS_BOOTSTRAP),yes)
+	CC = $(BUILD_CC)
+	CXX = $(BUILD_CXX)
 else
-CC     = $(BUILD_CC)
-CXX    = $(BUILD_CXX)
+# Set CC and CXX for cross-compiling
+	ifneq ($(DEB_HOST_ARCH),$(DEB_BUILD_ARCH))
+	    CC     = $(DEB_HOST_GNU_TYPE)-gcc
+	    CXX    = $(DEB_HOST_GNU_TYPE)-g++
+	else
+	    CC     = $(BUILD_CC)
+	    CXX    = $(BUILD_CXX)
+	endif
 endif
 
 BUILD_CFLAGS = -O2 -g
@@ -126,9 +131,9 @@ endif
 # Which build pass are we on?
 curpass = $(filter-out %_,$(subst _,_ ,$@))
 
-DEB_ARCH_REGULAR_PACKAGES = $(libc) $(libc)-dev $(libc)-dbg $(libc)-prof $(libc)-pic locales-all
-DEB_INDEP_REGULAR_PACKAGES = glibc-doc glibc-source locales
-DEB_UDEB_PACKAGES = $(libc)-udeb libnss-dns-udeb libnss-files-udeb
+DEB_ARCH_REGULAR_PACKAGES = $(libc) $(libc)-dev $(libc)-dbg
+DEB_INDEP_REGULAR_PACKAGES =
+DEB_UDEB_PACKAGES =
 
 # Generic kernel version check
 define kernel_check
@@ -151,7 +156,22 @@ include debian/sysdeps/depflags.mk
 NOSTRIP_$(libc)-dbg = 1
 
 ifeq ($(threads),yes)
-DEB_ARCH_REGULAR_PACKAGES += nscd
+#DEB_ARCH_REGULAR_PACKAGES += nscd
+endif
+
+#
+# glibc bootstrap stuff
+#
+ifeq ($(DEB_CROSS_BOOTSTRAP),yes)
+	GLIBC_PASSES := libc-headers
+	DEB_ARCH_REGULAR_PACKAGES := $(libc)-dev-headers
+	DEB_INDEP_REGULAR_PACKAGES =
+	DEB_UDEB_PACKAGES =
+else ifeq ($(DEB_CROSS_BOOTSTRAP),second)
+	GLIBC_PASSES := libc-second
+	DEB_ARCH_REGULAR_PACKAGES := $(libc) $(libc)-dev
+	DEB_INDEP_REGULAR_PACKAGES =
+	DEB_UDEB_PACKAGES =
 endif
 
 # And now the rules...

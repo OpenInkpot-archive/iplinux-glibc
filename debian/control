@@ -94,6 +94,14 @@ Description: GNU C Library: Development Libraries and Header Files
  Contains the symlinks, headers, and object files needed to compile
  and link programs which use the standard C library.
 
+Package: libc6-dev-headers
+Architecture: amd64 arm armeb armel i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
+Section: libdevel
+Priority: extra
+Description: GNU C Library: Bootstrap Header Files
+ Contains the headers required for bootstrapping the toolchain, in particular,
+ building the bootstrap cross-gcc.
+
 Package: libc6-dbg
 Architecture: amd64 arm armeb armel i386 m32r m68k mips mipsel powerpc ppc64 sparc s390 hppa sh3 sh4 sh3eb sh4eb
 Section: libdevel

@@ -148,7 +148,7 @@ $(patsubst %,$(stamp)binaryinst_%,$(DEB_UDEB_PACKAGES)): $(stamp)debhelper
 
 	touch $@
 
-OPT_PASSES = $(filter-out libc, $(GLIBC_PASSES))
+OPT_PASSES = $(filter-out libc libc-second, $(GLIBC_PASSES))
 OPT_DIRS = $(foreach pass,$(OPT_PASSES),$($(pass)_slibdir) $($(pass)_libdir))
 
 debhelper: $(stamp)debhelper
@@ -184,6 +184,13 @@ $(stamp)debhelper:
 	      ;; \
 	  esac; \
 	done
+
+	# Second stage of bootstrap forces us to generate stripped down
+	# libc6/libc6-dev, so let's remove all the not-yet-built stuff here.
+	if [ "$(GLIBC_PASSES)" = "libc-second" ]; then \
+		sed -e 's/tmp-libc/tmp-libc-second/g' -e '/usr\/bin/d' -i debian/$(libc)-dev.install; \
+		sed -e 's/tmp-libc/tmp-libc-second/g' -e '1q' -i debian/$(libc).install; \
+	fi
 
 	# Hack: special-case passes whose destdir is a biarch directory
 	# to use a different install template, which includes more
