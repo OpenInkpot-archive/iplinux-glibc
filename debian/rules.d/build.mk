@@ -77,6 +77,8 @@ $(stamp)configure_%: $(stamp)mkbuilddir_%
 		CXX="$(call xx,CXX)" \
 		AUTOCONF=false \
 		MAKEINFO=: \
+		$(call xx,configure-args) \
+		ac_cv_objext=o \
 		$(CURDIR)/$(DEB_SRCDIR)/configure \
 		--host=$(call xx,configure_target) \
 		--build=$$configure_build --prefix=/usr --without-cvs \
