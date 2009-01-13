@@ -1,3 +1,5 @@
+libc-second_add-ons = $(libc_add-ons)
+
 libc_slibdir = /lib
 libc_libdir = /usr/lib
 libc_rtlddir = /lib64
