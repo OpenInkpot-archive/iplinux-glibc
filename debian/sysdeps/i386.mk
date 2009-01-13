@@ -1,3 +1,4 @@
+libc-second_add-ons = $(libc_add-ons)
 libc-headers_add-ons = $(libc_add-ons)
 
 # We use -march=i686 and glibc's i686 routines use cmov, so require it.
