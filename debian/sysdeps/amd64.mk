@@ -5,14 +5,12 @@ libc_libdir = /usr/lib
 libc_rtlddir = /lib64
 
 # /lib64 and /usr/lib64 are provided by glibc instead base-files: #259302.
-define libc6_extra_pkg_install
-ln -sf /lib debian/$(curpass)/lib64
-ln -sf lib debian/$(curpass)/usr/lib64
-endef
+#define libc6_extra_pkg_install
+#ln -sf /lib debian/$(curpass)/lib64
+#ln -sf lib debian/$(curpass)/usr/lib64
+#endef
 
 # build 32-bit (i386) alternative library
-GLIBC_PASSES += i386
-DEB_ARCH_REGULAR_PACKAGES += libc6-i386 libc6-dev-i386
 libc6-i386_shlib_dep = libc6-i386 (>= $(shlib_dep_ver))
 i386_add-ons = nptl $(add-ons)
 i386_configure_target = i486-linux
