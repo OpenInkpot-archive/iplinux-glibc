@@ -9,7 +9,11 @@ libc_extra_config_options = $(extra_config_options)
 
 ifndef LINUX_SOURCE
   ifeq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
-    LINUX_HEADERS := /usr/include
+	ifeq (,$(DEB_CROSS_BOOTSTRAP))
+	    LINUX_HEADERS := /usr/include
+	else
+		LINUX_HEADERS := /usr/$(DEB_HOST_GNU_TYPE)/include
+	endif
   else
     LINUX_HEADERS := /usr/$(DEB_HOST_GNU_TYPE)/include
   endif

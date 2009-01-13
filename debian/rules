@@ -118,7 +118,10 @@ configure_target := $(DEB_HOST_GNU_TYPE)
 # that build daemons be able to run a particular optimized library, then
 # they can set the --build to match --host for that optimized build.
 # Among other things this lets tests run.
-configure_build := $(DEB_BUILD_GNU_TYPE)
+#
+# Architecture is slightly mangled, so library will always be cross-built.
+#
+configure_build := `echo $(DEB_BUILD_GNU_TYPE) | sed -e 's/\(.*\)-\(.*\)-\(.*\)/\1-build-\2-\3/'`
 
 ifneq ($(NO_LOG),yes)
 log_build   = $(CURDIR)/log-build-$(call xx,configure_target)-$(curpass)
