@@ -169,9 +169,7 @@ $(stamp)debhelper:
 	  case $$z in \
 	    *.install) \
 	      sed -e "s/^#.*//" -i $$z ; \
-	      if [ $(DEB_HOST_ARCH) != $(DEB_BUILD_ARCH) ]; then \
-	        sed -i "/^.*librpcsvc.a.*/d" $$z ; \
-	      fi ; \
+	      sed -i "/^.*librpcsvc.a.*/d" $$z ; \
 	      ;; \
 	    debian/$(libc).preinst) \
 	      rtld=`LANG=C LC_ALL=C readelf -l debian/tmp-libc/usr/bin/iconv | grep "interpreter" | sed -e 's/.*interpreter: \(.*\)]/\1/g'`; \
