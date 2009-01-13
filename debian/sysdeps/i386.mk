@@ -3,8 +3,6 @@ libc-headers_add-ons = $(libc_add-ons)
 # We use -march=i686 and glibc's i686 routines use cmov, so require it.
 # A Debian-local glibc patch adds cmov to the search path.
 # The optimized libraries also use NPTL!
-GLIBC_PASSES += i686
-DEB_ARCH_REGULAR_PACKAGES += libc6-i686
 i686_add-ons = nptl $(add-ons)
 i686_configure_target=i686-linux
 i686_extra_cflags = -march=i686 -mtune=i686 -O3
@@ -14,8 +12,6 @@ i686_extra_config_options = $(extra_config_options) --disable-profile
 
 # We use -mno-tls-direct-seg-refs to not wrap-around segments, as it
 # greatly increase the speed when running under the 32bit Xen hypervisor.
-GLIBC_PASSES += xen
-DEB_ARCH_REGULAR_PACKAGES += libc6-xen
 xen_add-ons = nptl $(add-ons)
 xen_configure_target=i686-linux
 xen_extra_cflags = -march=i686 -mtune=i686 -O3 -mno-tls-direct-seg-refs
@@ -34,8 +30,6 @@ echo 'hwcap 1 nosegneg'                                                       >>
 endef
 
 # build 64-bit (amd64) alternative library
-GLIBC_PASSES += amd64
-DEB_ARCH_REGULAR_PACKAGES += libc6-amd64 libc6-dev-amd64
 libc6-amd64_shlib_dep = libc6-amd64 (>= $(shlib_dep_ver))
 amd64_add-ons = nptl $(add-ons)
 amd64_configure_target = x86_64-linux
@@ -56,11 +50,11 @@ cp -af debian/tmp-amd64/usr/include/* \
 rm -f debian/tmp-libc/usr/include/gnu/stubs-64.h
 endef
 
-define libc6-dev_extra_pkg_install
-mkdir -p debian/libc6-dev/usr/lib/xen
-cp -af debian/tmp-xen/usr/lib/*.a \
-	debian/libc6-dev/usr/lib/xen
-endef
+#define libc6-dev_extra_pkg_install
+#mkdir -p debian/libc6-dev/usr/lib/xen
+#cp -af debian/tmp-xen/usr/lib/*.a \
+#	debian/libc6-dev/usr/lib/xen
+#endef
 
 define libc6-dev-amd64_extra_pkg_install
 mkdir -p debian/libc6-dev-amd64/usr/include/gnu
