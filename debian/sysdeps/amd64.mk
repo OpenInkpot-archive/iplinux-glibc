@@ -1,4 +1,6 @@
+libc_add-ons = nptl $(add-ons)
 libc-second_add-ons = $(libc_add-ons)
+libc-headers_add-ons = $(libc_add-ons)
 
 libc_slibdir = /lib
 libc_libdir = /usr/lib
