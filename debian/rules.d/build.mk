@@ -79,6 +79,8 @@ $(stamp)configure_%: $(stamp)mkbuilddir_%
 		MAKEINFO=: \
 		$(call xx,configure-args) \
 		ac_cv_objext=o \
+		libc_cv_forced_unwind=yes \
+		libc_cv_c_cleanup=yes \
 		$(CURDIR)/$(DEB_SRCDIR)/configure \
 		--host=$(call xx,configure_target) \
 		--build=$$configure_build --prefix=/usr --without-cvs \
