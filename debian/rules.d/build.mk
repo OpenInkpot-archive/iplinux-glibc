@@ -105,12 +105,8 @@ $(stamp)build_%: $(stamp)configure_%
 	fi
 	touch $@
 
-$(patsubst %,check_%,$(GLIBC_PASSES)) :: check_% : $(stamp)check_%
-$(stamp)check_%: $(stamp)build_%
-	touch $@
-
 $(patsubst %,install_%,$(GLIBC_PASSES)) :: install_% : $(stamp)install_%
-$(stamp)install_%: $(stamp)check_%
+$(stamp)install_%: $(stamp)build_%
 	@echo Installing $(curpass)
 	rm -rf $(CURDIR)/debian/tmp-$(curpass)
 	mkdir -p $(DEB_BUILDDIR)/elf
