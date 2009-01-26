@@ -121,7 +121,7 @@ configure_target := $(DEB_HOST_GNU_TYPE)
 #
 # Architecture is slightly mangled, so library will always be cross-built.
 #
-configure_build := `echo $(DEB_BUILD_GNU_TYPE) | sed -e 's/\(.*\)-\(.*\)-\(.*\)/\1-build-\2-\3/'`
+configure_build := $(DEB_BUILD_GNU_TYPE)
 
 ifneq ($(NO_LOG),yes)
 log_build   = $(CURDIR)/log-build-$(call xx,configure_target)-$(curpass)
