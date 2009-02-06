@@ -1,0 +1,11 @@
+--- Makerules.old	2009-02-06 18:42:24.000000000 +0600
++++ Makerules	2009-02-06 23:28:54.000000000 +0600
+@@ -1316,7 +1316,7 @@
+ 	  echo '#define _LIBC 1';					\
+ 	  echo '#include "$(..)misc/sys/uio.h"'; } |			\
+ 	$(CC) -E -dM -MD -MP -MF $(@:st=dT) -MT '$(@:st=h) $(@:st=d)' 	\
+-	      $(+includes) -xc - -o $(@:st=hT)
++	      $(+includes) $(+cflags) -xc - -o $(@:st=hT)
+ 	sed $(sed-remove-objpfx) $(sed-remove-dotdot)			\
+ 	    $(@:st=dT) > $(@:st=dt)
+ 	mv -f $(@:st=dt) $(@:st=d)

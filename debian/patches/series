@@ -129,6 +129,7 @@ mips/cvs-mknod.diff -p0
 mips/local-lazy-eval.diff -p0
 mips/local-r10k.diff -p0
 mips/local-setjmp.diff -p0
+mips/local-pass-cflags-to-stdio_lims-generation-on-bootstrap.diff -p0
 
 powerpc/local-sysconf.diff 
 
