@@ -1,5 +1,5 @@
 Source: @glibc@
-Section: libs
+Section: core
 Priority: required
 Build-Depends: gettext, make (>= 3.80), dpkg-dev (>= 1.13.5), bzip2, lzma, file, quilt,
  autoconf, sed (>= 4.0.5-4), gawk, debhelper (>= 5.0),
@@ -14,27 +14,8 @@ Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Uploaders: Ben Collins <bcollins@debian.org>, GOTO Masanori <gotom@debian.org>, Philip Blundell <pb@nexus.co.uk>, Jeff Bailey <jbailey@raspberryginger.com>, Daniel Jacobowitz <dan@debian.org>, Clint Adams <schizo@debian.org>, Aurelien Jarno <aurel32@debian.org>, Pierre Habouzit <madcoder@debian.org>
 Standards-Version: 3.7.3
 
-Package: @glibc@-doc
-Architecture: all
-Section: doc
-Priority: optional
-Suggests: @glibc@-doc-reference
-Description: GNU C Library: Documentation
- Contains man pages for libpthread functions and the complete GNU C Library
- ChangeLog.  The GNU C Library Reference manual has been moved into
- @glibc@-doc-reference for licensing reasons.
-
-Package: glibc-source
-Architecture: all
-Section: devel
-Priority: optional
-Description: GNU C Library: sources
- This package contains the sources and patches which are needed to
- build glibc.
-
 Package: locales
 Architecture: all
-Section: libs
 Priority: standard
 Depends: ${locale:Depends}, debconf | debconf-2.0
 Conflicts: base-config, belocs-locales-bin, belocs-locales-data
@@ -52,7 +33,6 @@ Description: GNU C Library: National Language (locale) data [support]
 
 Package: locales-all
 Architecture: any
-Section: libs
 Priority: extra
 Depends: ${locale:Depends}, lzma
 Provides: locales
@@ -61,15 +41,3 @@ Description: GNU C Library: Precompiled locale data
  A better alternative is to install the locales package and only select
  desired locales, but it can be useful on a low-memory machine because some
  locale files take a lot of memory to be compiled.
-
-Package: nscd
-Architecture: any
-Section: admin
-Priority: optional
-Depends: ${shlibs:Depends}
-Description: GNU C Library: Name Service Cache Daemon
- A daemon which handles passwd, group and host lookups
- for running programs and caches the results for the next
- query. You should install this package only if you use
- slow Services like LDAP, NIS or NIS+
-
