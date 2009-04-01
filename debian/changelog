@@ -1,3 +1,9 @@
+glibc (2.7-16.ip4) asimov; urgency=low
+
+  * pass --without-fp to mipsel build, it's softfp now.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 02 Apr 2009 04:54:33 +0700
+
 glibc (2.7-16.ip3) asimov; urgency=low
 
   * Empty /lib/$arch, /usr/lib/$arch directories removed.
