@@ -15,9 +15,6 @@ if [ "$1" = "configure" ]; then
     if ! grep -q '^include /etc/ld.so.conf.d/.*\.conf$' /etc/ld.so.conf ; then
         echo 'include /etc/ld.so.conf.d/*.conf' >> /etc/ld.so.conf
     fi
- 
-    # Generate cache file /usr/lib/gconv/gconv-modules.cache
-    iconvconfig || true
 fi
 
 #DEBHELPER#

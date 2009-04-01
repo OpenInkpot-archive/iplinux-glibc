@@ -1,3 +1,12 @@
+glibc (2.7-16.ip3) asimov; urgency=low
+
+  * Empty /lib/$arch, /usr/lib/$arch directories removed.
+  * /etc/init.d/glibc.sh script removed.
+  * Documentation is no longer packaged.
+  * gconv modules were split out to gconv-data-* packages.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Wed, 01 Apr 2009 18:35:53 +0700
+
 glibc (2.7-16.ip2) asimov; urgency=low
 
   * Added patch rtld-allow-specifying-argv0.diff, necessary for
@@ -7,7 +16,7 @@ glibc (2.7-16.ip2) asimov; urgency=low
 
 glibc (2.7-16.ip1) asimov; urgency=low
 
-  * First build for Inkpump:
+  * First build for IPlinux:
     - added cross-toolchain bootsrap (forward-ported from Slind),
     - armel support added.
 

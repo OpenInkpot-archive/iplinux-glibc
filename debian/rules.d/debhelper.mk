@@ -18,16 +18,6 @@ $(stamp)binaryinst_$(libc)-pic:: $(stamp)debhelper
 
 # Some per-package extra files to install.
 define $(libc)_extra_debhelper_pkg_install
-	install --mode=0644 $(DEB_SRCDIR)/ChangeLog debian/$(curpass)/usr/share/doc/$(curpass)/changelog
-	install --mode=0644 $(DEB_SRCDIR)/nptl/ChangeLog debian/$(curpass)/usr/share/doc/$(curpass)/ChangeLog.nptl
-	sed -e "/KERNEL_VERSION_CHECK/r debian/script.in/kernelcheck.sh" \
-		debian/local/etc_init.d/glibc.sh | \
-		sed -e "s/EXIT_CHECK/sleep 5/" -e "s/DEB_HOST_ARCH/$(DEB_HOST_ARCH)/" > debian/glibc.sh.generated
-	install --mode=0755 debian/glibc.sh.generated debian/$(curpass)/etc/init.d/glibc.sh
-	# dh_installmanpages thinks that .so is a language.
-	install --mode=0644 debian/local/manpages/ld.so.8 debian/$(curpass)/usr/share/man/man8/ld.so.8
-
-	install --mode=0644 debian/FAQ debian/$(curpass)/usr/share/doc/$(curpass)/README.Debian
 endef
 
 # Should each of these have per-package options?
@@ -45,12 +35,8 @@ $(patsubst %,$(stamp)binaryinst_%,$(DEB_ARCH_REGULAR_PACKAGES) $(DEB_INDEP_REGUL
 	dh_testroot
 	dh_installdirs -p$(curpass)
 	dh_install -p$(curpass)
-	dh_installman -p$(curpass)
-	dh_installinfo -p$(curpass)
 	dh_installdebconf -p$(curpass)
-	dh_installchangelogs -p$(curpass)
 	dh_installinit -p$(curpass)
-	dh_installdocs -p$(curpass) 
 	dh_link -p$(curpass)
 	set -e; if test -d debian/bug/$(curpass); then                   \
 	    dh_installdirs -p$(curpass) usr/share/bug;                   \
@@ -101,15 +87,6 @@ endif
 		-o -regex '.*/libc-.*so' \) \
 		-exec chmod a+x '{}' ';'
 	dh_makeshlibs -X/usr/lib/debug -p$(curpass) -V "$(call xx,shlib_dep)"
-	# Add relevant udeb: lines in shlibs files
-	chmod a+x debian/shlibs-add-udebs
-	./debian/shlibs-add-udebs $(curpass)
-
-	if [ -f debian/$(curpass).lintian ] ; then \
-		install -d -m 755 -o root -g root debian/$(curpass)/usr/share/lintian/overrides/ ; \
-		install -m 644 -o root -g root debian/$(curpass).lintian \
-			debian/$(curpass)/usr/share/lintian/overrides/$(curpass) ; \
-	fi
 
 	dh_installdeb -p$(curpass)
 	if [ $(curpass) = nscd ] ; then \
@@ -131,7 +108,7 @@ $(patsubst %,$(stamp)binaryinst_%,$(DEB_UDEB_PACKAGES)): $(stamp)debhelper
 	dh_installdirs -p$(curpass)
 	dh_install -p$(curpass)
 	dh_strip -p$(curpass)
-	
+
 	# when you want to install extra packages, use extra_pkg_install.
 	$(call xx,extra_pkg_install)
 
@@ -189,34 +166,6 @@ $(stamp)debhelper:
 		sed -e 's/tmp-libc/tmp-libc-second/g' -e '/usr\/bin/d' -i debian/$(libc)-dev.install; \
 		sed -e 's/tmp-libc/tmp-libc-second/g' -e '1q' -i debian/$(libc).install; \
 	fi
-
-	# Hack: special-case passes whose destdir is a biarch directory
-	# to use a different install template, which includes more
-	# libraries.  Also generate a -dev.  Other libraries get scripts
-	# to temporarily disable hwcap.  This needs some cleaning up.
-	set -- $(OPT_DIRS); \
-	for x in $(OPT_PASSES); do \
-	  slibdir=$$1; \
-	  shift; \
-	  case $$slibdir in \
-	  /lib32 | /lib64 | /emul/ia32-linux/lib) \
-	    suffix="alt"; \
-	    libdir=$$1; \
-	    shift; \
-	    ;; \
-	  *) \
-	    suffix="otherbuild"; \
-	    ;; \
-	  esac; \
-	  for y in debian/$(libc)*-$$suffix.* ; do \
-	    z=`echo $$y | sed -e "s/$$suffix/$$x/"` ; \
-	    cp $$y $$z ; \
-	    sed -e "s#TMPDIR#debian/tmp-$$x#g" -i $$z; \
-	    sed -e "s#SLIBDIR#$$slibdir#g" -i $$z; \
-	    sed -e "s#LIBDIR#$$libdir#g" -i $$z; \
-	    sed -e "s#FLAVOR#$$x#g" -i $$z; \
-	  done ; \
-	done
 
 	# Substitute __PROVIDED_LOCALES__.
 	perl -i -pe 'BEGIN {undef $$/; open(IN, "debian/tmp-libc/usr/share/i18n/SUPPORTED"); $$j=<IN>;} s/__PROVIDED_LOCALES__/$$j/g;' debian/locales.config debian/locales.postinst

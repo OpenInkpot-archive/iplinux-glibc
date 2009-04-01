@@ -97,12 +97,12 @@ $(stamp)build_%: $(stamp)configure_%
 	  $(call logme, -a $(log_build), $(MAKE) -C $(DEB_BUILDDIR) $(NJOBS)); \
 	  $(call logme, -a $(log_build), echo "---------------" ; echo -n "Build ended: " ; date --rfc-2822); \
 	fi
-	if [ $(curpass) = libc ]; then \
-	  $(MAKE) -C $(DEB_BUILDDIR) $(NJOBS) \
-	    objdir=$(DEB_BUILDDIR) install_root=$(CURDIR)/build-tree/locales-all \
-	      localedata/install-locales; \
-	    tar --use-compress-program /usr/bin/lzma --owner root --group root -cf $(CURDIR)/build-tree/locales-all/supported.tar.lzma -C $(CURDIR)/build-tree/locales-all/usr/lib/locale .; \
-	fi
+	#if [ $(curpass) = libc ]; then \
+	#  $(MAKE) -C $(DEB_BUILDDIR) $(NJOBS) \
+	#    objdir=$(DEB_BUILDDIR) install_root=$(CURDIR)/build-tree/locales-all \
+	#      localedata/install-locales; \
+	#    tar --use-compress-program /usr/bin/lzma --owner root --group root -cf $(CURDIR)/build-tree/locales-all/supported.tar.lzma -C $(CURDIR)/build-tree/locales-all/usr/lib/locale .; \
+	#fi
 	touch $@
 
 $(patsubst %,install_%,$(GLIBC_PASSES)) :: install_% : $(stamp)install_%
@@ -154,23 +154,23 @@ $(stamp)install_%: $(stamp)build_%
 	  cp $(DEB_BUILDDIR)/misc/syscall-list.h $(CURDIR)/debian/tmp-$(curpass)/usr/include/bits/syscall.h
 
 	# Generate the list of SUPPORTED locales
-	if [ $(curpass) = libc ]; then \
-	  $(MAKE) -f debian/generate-supported.mk IN=$(DEB_SRCDIR)/localedata/SUPPORTED \
-	    OUT=debian/tmp-$(curpass)/usr/share/i18n/SUPPORTED; \
-	fi
+	#if [ $(curpass) = libc ]; then \
+	#  $(MAKE) -f debian/generate-supported.mk IN=$(DEB_SRCDIR)/localedata/SUPPORTED \
+	#    OUT=debian/tmp-$(curpass)/usr/share/i18n/SUPPORTED; \
+	#fi
 
 	# Create the multidir directories, and the configuration file in /etc/ld.so.conf.d
-	if [ $(curpass) = libc ]; then \
-	  mkdir -p debian/tmp-$(curpass)/etc/ld.so.conf.d; \
-	  machine=`sed '/^ *config-machine *=/!d;s/.*= *//g' $(DEB_BUILDDIR)/config.make`; \
-	  os=`sed '/^ *config-os *=/!d;s/.*= *//g' $(DEB_BUILDDIR)/config.make`; \
-	  triplet="$$machine-$$os"; \
-	  mkdir -p debian/tmp-$(curpass)/lib/$$triplet debian/tmp-$(curpass)/usr/lib/$$triplet; \
-	  conffile="debian/tmp-$(curpass)/etc/ld.so.conf.d/$$triplet.conf"; \
-	  echo "# Multiarch support" > $$conffile; \
-	  echo /lib/$$triplet >> $$conffile; \
-	  echo /usr/lib/$$triplet >> $$conffile; \
-	fi
+	#if [ $(curpass) = libc ]; then \
+	#  mkdir -p debian/tmp-$(curpass)/etc/ld.so.conf.d; \
+	#  machine=`sed '/^ *config-machine *=/!d;s/.*= *//g' $(DEB_BUILDDIR)/config.make`; \
+	#  os=`sed '/^ *config-os *=/!d;s/.*= *//g' $(DEB_BUILDDIR)/config.make`; \
+	#  triplet="$$machine-$$os"; \
+	#  mkdir -p debian/tmp-$(curpass)/lib/$$triplet debian/tmp-$(curpass)/usr/lib/$$triplet; \
+	#  conffile="debian/tmp-$(curpass)/etc/ld.so.conf.d/$$triplet.conf"; \
+	#  echo "# Multiarch support" > $$conffile; \
+	#  echo /lib/$$triplet >> $$conffile; \
+	#  echo /usr/lib/$$triplet >> $$conffile; \
+	#fi
 	
 	# Create a default configuration file that adds /usr/local/lib to the search path
 	if [ $(curpass) = libc ]; then \
