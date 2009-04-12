@@ -1,4 +1,4 @@
-GLIBC_OVERLAYS ?= $(shell ls glibc-linuxthreads* glibc-ports* glibc-libidn*)
+GLIBC_OVERLAYS ?= $(shell ls glibc-linuxthreads* glibc-ports* glibc-libidn* localedef-eglibc*)
 MIN_KERNEL_SUPPORTED := 2.6.8
 libc = libc6
 

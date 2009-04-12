@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+LOCALES_DIR=/usr/lib/locale
+LOCALES_ARCHIVE_DIR=/usr/lib/locale-archive
+
+if [ $# -ne 1 ]; then
+    echo "Usage: genlocale <locale>"
+    exit 1
+fi
+
+if ! [ -e "$LOCALES_ARCHIVE_DIR/$1" ]; then
+    echo "Can't find compressed archive of $1"
+    exit 1
+fi
+
+mkdir -p $LOCALES_DIR
+lzmacat "$LOCALES_ARCHIVE_DIR/$1" | tar -x -C $LOCALES_DIR "$1.UTF-8"

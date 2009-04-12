@@ -90,6 +90,14 @@ $(stamp)configure_%: $(stamp)mkbuilddir_%
 		$(call xx,with_headers) $(call xx,extra_config_options))
 	touch $@
 
+	if [ $(curpass) = libc ]; then \
+	  $(call logme, -a $(log_build), \
+	    mkdir -p $(DEB_BUILDDIR)/localedef-eglibc && \
+		cd $(DEB_BUILDDIR)/localedef-eglibc && \
+	    CPPFLAGS= $(CURDIR)/$(DEB_SRCDIR)/localedef-eglibc-2.9/configure \
+	       --with-glibc=$(CURDIR)/$(DEB_SRCDIR)/localedef-eglibc-2.9/eglibc-2.9) \
+	fi
+
 $(patsubst %,build_%,$(GLIBC_PASSES)) :: build_% : $(stamp)build_%
 $(stamp)build_%: $(stamp)configure_%
 	@echo Building $(curpass)
@@ -97,12 +105,21 @@ $(stamp)build_%: $(stamp)configure_%
 	  $(call logme, -a $(log_build), $(MAKE) -C $(DEB_BUILDDIR) $(NJOBS)); \
 	  $(call logme, -a $(log_build), echo "---------------" ; echo -n "Build ended: " ; date --rfc-2822); \
 	fi
-	#if [ $(curpass) = libc ]; then \
-	#  $(MAKE) -C $(DEB_BUILDDIR) $(NJOBS) \
-	#    objdir=$(DEB_BUILDDIR) install_root=$(CURDIR)/build-tree/locales-all \
-	#      localedata/install-locales; \
-	#    tar --use-compress-program /usr/bin/lzma --owner root --group root -cf $(CURDIR)/build-tree/locales-all/supported.tar.lzma -C $(CURDIR)/build-tree/locales-all/usr/lib/locale .; \
-	#fi
+	if [ $(curpass) = libc ]; then \
+	  $(call logme, -a $(log_build), $(MAKE) -C $(DEB_BUILDDIR)/localedef-eglibc $(NJOBS)); \
+	  $(call logme, -a $(log_build), \
+	    mkdir -p $(CURDIR)/$(DEB_BUILDDIR)/localedef-eglibc/locales; \
+	    for i in $(shell cat $(CURDIR)/debian/locales-list); do \
+	      I18NPATH=$(CURDIR)/$(DEB_SRCDIR)/localedata $(DEB_BUILDDIR)/localedef-eglibc/localedef \
+	          -i \$$i -f UTF-8 $(CURDIR)/$(DEB_BUILDDIR)/localedef-eglibc/locales/\$$i.UTF-8; \
+		done); \
+	fi
+#if [ $(curpass) = libc ]; then \
+#  $(MAKE) -C $(DEB_BUILDDIR) $(NJOBS) \
+#    objdir=$(DEB_BUILDDIR) install_root=$(CURDIR)/build-tree/locales-all \
+#      localedata/install-locales; \
+#    tar --use-compress-program /usr/bin/lzma --owner root --group root -cf $(CURDIR)/build-tree/locales-all/supported.tar.lzma -C $(CURDIR)/build-tree/locales-all/usr/lib/locale .; \
+#fi
 	touch $@
 
 $(patsubst %,install_%,$(GLIBC_PASSES)) :: install_% : $(stamp)install_%
@@ -145,7 +162,7 @@ $(stamp)install_%: $(stamp)build_%
          install_root=$(CURDIR)/debian/tmp-$(curpass) $(install_target); \
 	fi
 
-	# Install headers no matter what
+# Install headers no matter what
 	$(MAKE) -C $(DEB_BUILDDIR) $(NJOBS) \
 	  CC="$(call xx,CC)" \
 	  install_root=$(CURDIR)/debian/tmp-$(curpass) prefix=/usr install-headers; \
@@ -153,31 +170,35 @@ $(stamp)install_%: $(stamp)build_%
 	  cp $(DEB_BUILDDIR)/bits/stdio_lim.h $(CURDIR)/debian/tmp-$(curpass)/usr/include/bits; \
 	  cp $(DEB_BUILDDIR)/misc/syscall-list.h $(CURDIR)/debian/tmp-$(curpass)/usr/include/bits/syscall.h
 
-	# Generate the list of SUPPORTED locales
-	#if [ $(curpass) = libc ]; then \
-	#  $(MAKE) -f debian/generate-supported.mk IN=$(DEB_SRCDIR)/localedata/SUPPORTED \
-	#    OUT=debian/tmp-$(curpass)/usr/share/i18n/SUPPORTED; \
-	#fi
+	if [ $(curpass) = libc ]; then \
+	  mkdir -p $(CURDIR)/debian/tmp-$(curpass)/usr/lib/locale-archive; \
+	  (cd $(DEB_BUILDDIR)/localedef-eglibc/locales \
+	   && tar --lzma --hard-dereference \
+	          -cf $(CURDIR)/debian/tmp-$(curpass)/usr/lib/locale-archive/main.tar.lzma * && \
+	   for i in $(shell cat $(CURDIR)/debian/locales-list); do \
+	     ln -s main.tar.lzma $(CURDIR)/debian/tmp-$(curpass)/usr/lib/locale-archive/$$i; \
+	   done); \
+	fi
 
-	# Create the multidir directories, and the configuration file in /etc/ld.so.conf.d
-	#if [ $(curpass) = libc ]; then \
-	#  mkdir -p debian/tmp-$(curpass)/etc/ld.so.conf.d; \
-	#  machine=`sed '/^ *config-machine *=/!d;s/.*= *//g' $(DEB_BUILDDIR)/config.make`; \
-	#  os=`sed '/^ *config-os *=/!d;s/.*= *//g' $(DEB_BUILDDIR)/config.make`; \
-	#  triplet="$$machine-$$os"; \
-	#  mkdir -p debian/tmp-$(curpass)/lib/$$triplet debian/tmp-$(curpass)/usr/lib/$$triplet; \
-	#  conffile="debian/tmp-$(curpass)/etc/ld.so.conf.d/$$triplet.conf"; \
-	#  echo "# Multiarch support" > $$conffile; \
-	#  echo /lib/$$triplet >> $$conffile; \
-	#  echo /usr/lib/$$triplet >> $$conffile; \
-	#fi
-	
-	# Create a default configuration file that adds /usr/local/lib to the search path
+# Create the multidir directories, and the configuration file in /etc/ld.so.conf.d
+#if [ $(curpass) = libc ]; then \
+#  mkdir -p debian/tmp-$(curpass)/etc/ld.so.conf.d; \
+#  machine=`sed '/^ *config-machine *=/!d;s/.*= *//g' $(DEB_BUILDDIR)/config.make`; \
+#  os=`sed '/^ *config-os *=/!d;s/.*= *//g' $(DEB_BUILDDIR)/config.make`; \
+#  triplet="$$machine-$$os"; \
+#  mkdir -p debian/tmp-$(curpass)/lib/$$triplet debian/tmp-$(curpass)/usr/lib/$$triplet; \
+#  conffile="debian/tmp-$(curpass)/etc/ld.so.conf.d/$$triplet.conf"; \
+#  echo "# Multiarch support" > $$conffile; \
+#  echo /lib/$$triplet >> $$conffile; \
+#  echo /usr/lib/$$triplet >> $$conffile; \
+#fi
+
+# Create a default configuration file that adds /usr/local/lib to the search path
 	if [ $(curpass) = libc ]; then \
 	  mkdir -p debian/tmp-$(curpass)/etc/ld.so.conf.d; \
 	  echo "# libc default configuration" > debian/tmp-$(curpass)/etc/ld.so.conf.d/libc.conf ; \
 	  echo /usr/local/lib >> debian/tmp-$(curpass)/etc/ld.so.conf.d/libc.conf ; \
- 	fi
+	fi
 
 	$(call xx,extra_install)
 	touch $@
