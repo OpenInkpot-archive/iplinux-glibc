@@ -1,3 +1,11 @@
+glibc (2.7-16.ip5) asimov; urgency=low
+
+  * Added generation of locales (localedef taken from eglibc).
+  * Generated locales are packed into archive.
+  * genlocale(1) added, extracting specified locale from archive.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Mon, 13 Apr 2009 00:18:03 +0700
+
 glibc (2.7-16.ip4) asimov; urgency=low
 
   * pass --without-fp to mipsel build, it's softfp now.
