@@ -1,3 +1,9 @@
+glibc (2.7-16.ip6) asimov; urgency=low
+
+  * Added be_BY@latin and uk_UA locales.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 21 May 2009 17:25:37 +0700
+
 glibc (2.7-16.ip5) asimov; urgency=low
 
   * Added generation of locales (localedef taken from eglibc).
