@@ -1,3 +1,9 @@
+glibc (2.7-16.ip7) asimov; urgency=low
+
+  * Added bg_BG, bn_IN, ca_ES and zh_TW locales.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 24 Sep 2009 14:35:20 +0700
+
 glibc (2.7-16.ip6) asimov; urgency=low
 
   * Added be_BY@latin and uk_UA locales.
