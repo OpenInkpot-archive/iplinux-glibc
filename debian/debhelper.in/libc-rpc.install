@@ -1,0 +1,2 @@
+debian/tmp-libc/usr/sbin/rpcinfo usr/bin
+debian/local/etc/bindresvport.blacklist /etc

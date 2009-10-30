@@ -48,3 +48,27 @@ Description: GNU C Library: recoding tables (oriental)
  This package contains tables for encodings for oriental languages: Chinese,
  Japanese, Korean.
 
+Package: libc6-iconv
+Architecture: any
+Priority: optional
+Description: GNU C Library: iconv utilities
+ Command-line iconv(1) utility and iconv cache file generator.
+
+Package: libc6-tz
+Architecture: any
+Priority: optional
+Description: GNU C Library: timezone utilities
+ Timezone description compiler and dumper.
+
+Package: libc6-rpc
+Architecture: any
+Priority: optional
+Description: GNU C Library: RPC utilities
+ RPC info tool and blacklisted ports for RPC.
+
+Package: libc6-utils
+Architecture: any
+Priority: optional
+Description: GNU C Library: utilities
+ catchsegv and ldd
+

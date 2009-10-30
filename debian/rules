@@ -176,7 +176,7 @@ else ifeq ($(DEB_CROSS_BOOTSTRAP),second)
 	DEB_INDEP_REGULAR_PACKAGES =
 	DEB_UDEB_PACKAGES =
 else
-	DEB_ARCH_REGULAR_PACKAGES += locales gconv-data-basic gconv-data-ebcdic gconv-data-oriental
+	DEB_ARCH_REGULAR_PACKAGES += locales gconv-data-basic gconv-data-ebcdic gconv-data-oriental $(libc)-iconv $(libc)-tz $(libc)-rpc $(libc)-utils
 endif
 
 # And now the rules...

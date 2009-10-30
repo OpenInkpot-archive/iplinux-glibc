@@ -1,0 +1,2 @@
+debian/tmp-libc/usr/bin/catchsegv usr/bin
+debian/tmp-libc/usr/bin/ldd usr/bin

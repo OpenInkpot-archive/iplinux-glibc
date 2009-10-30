@@ -1,0 +1,2 @@
+debian/tmp-libc/usr/sbin/zdump usr/bin
+debian/tmp-libc/usr/sbin/zic usr/sbin
