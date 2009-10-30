@@ -1,3 +1,12 @@
+glibc (2.7-16.ip8) asimov; urgency=low
+
+  * Rarely used utils moved to libc-{utils,tz,rpc,iconv} subpackages.
+  * Added lv_LV locale (OI#624)
+  * ldd(1) is now sh, not bash script (OI#573)
+  * tzselect(1) removed (OI#573)
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Fri, 30 Oct 2009 22:58:04 +0600
+
 glibc (2.7-16.ip7) asimov; urgency=low
 
   * Added bg_BG, bn_IN, ca_ES and zh_TW locales.
