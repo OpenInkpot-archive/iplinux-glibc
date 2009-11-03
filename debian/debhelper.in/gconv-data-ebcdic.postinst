@@ -4,7 +4,7 @@ export LC_ALL=C
 
 if [ "$1" = "configure" ]; then
     # Generate cache file /usr/lib/gconv/gconv-modules.cache
-    iconvconfig || true
+    iconvconfig 2>/dev/null || true
 fi
 
 #DEBHELPER#
