@@ -20,6 +20,7 @@ Description: GNU C Library: National Language (locale) data [support]
 Package: gconv-data-basic
 Architecture: any
 Priority: extra
+Depends: libc6-iconv
 Description: GNU C Library: recoding tables (basic)
  Data tables used by C library iconv for converting text between various
  encodings.
