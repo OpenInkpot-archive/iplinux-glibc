@@ -1,3 +1,9 @@
+glibc (2.7-16.ip9) asimov; urgency=low
+
+  * Add missing libc6-iconv dependency for gconv-data-* packages
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Tue, 03 Nov 2009 19:05:47 +0600
+
 glibc (2.7-16.ip8) asimov; urgency=low
 
   * Rarely used utils moved to libc-{utils,tz,rpc,iconv} subpackages.
