@@ -1,3 +1,11 @@
+glibc (2.7-16.ip10) asimov; urgency=low
+
+  * Add build-essential to build-depends
+  * Mark package as not requiring cross-toolchain for build
+  * Add patch allowing linking with newer binutils
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sat, 28 Nov 2009 05:47:25 +0600
+
 glibc (2.7-16.ip9) asimov; urgency=low
 
   * Add missing libc6-iconv dependency for gconv-data-* packages
