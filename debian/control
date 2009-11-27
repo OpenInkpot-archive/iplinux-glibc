@@ -5,6 +5,7 @@ Build-Depends: make (>= 3.80), dpkg-dev (>= 1.13.5), bzip2, lzma, file, quilt,
  sed (>= 4.0.5-4), gawk, debhelper (>= 5.0), binutils (>= 2.17cvs20070426), linux-libc-dev
 XCS-Cross-Host-Build-Depends: make (>= 3.80), dpkg-dev (>= 1.13.5), bzip2, lzma, file, quilt, sed (>= 4.0.5-4), gawk, debhelper (>= 5.0), build-essential
 XCS-Cross-Build-Depends: linux-libc-dev
+XCS-Needs-Cross-Toolchain: no
 Build-Depends-Indep: perl, po-debconf (>= 1.0)
 Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
 Standards-Version: 3.8.0
