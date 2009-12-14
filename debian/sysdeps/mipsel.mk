@@ -13,8 +13,7 @@ extra_config_options = --without-fp
 # Some tests assume a fast machine
 TIMEOUTFACTOR=2
 
-# bootstrap needs this macro. It is expected to be defined by the compiler on
-# later stages.
+# bootstrap needs these macros. They are expected to be defined by the compiler
+# on later stages.
 
 libc-headers_extra_cflags = -D_MIPS_SZPTR=32 -D__MIPSEL__
-

@@ -171,13 +171,11 @@ $(stamp)debhelper:
 	perl -i -pe 'BEGIN {undef $$/; open(IN, "debian/tmp-libc/usr/share/i18n/SUPPORTED"); $$j=<IN>;} s/__PROVIDED_LOCALES__/$$j/g;' debian/locales.config debian/locales.postinst
 
 	# Generate common substvars files.
-	echo "locale:Depends=$(shell perl debian/debver2localesdep.pl $(LOCALES_DEP_VER))" > tmp.substvars
-	echo "locale-compat:Depends=$(shell perl debian/debver2localesdep.pl $(LOCALES_COMPAT_VER))" >> tmp.substvars
 
-	for pkg in $(DEB_ARCH_REGULAR_PACKAGES) $(DEB_INDEP_REGULAR_PACKAGES) $(DEB_UDEB_PACKAGES); do \
-	  cp tmp.substvars debian/$$pkg.substvars; \
-	done
-	rm -f tmp.substvars
+	# for pkg in $(DEB_ARCH_REGULAR_PACKAGES) $(DEB_INDEP_REGULAR_PACKAGES) $(DEB_UDEB_PACKAGES); do \
+	#   cp tmp.substvars debian/$$pkg.substvars; \
+	# done
+	# rm -f tmp.substvars
 
 	touch $(stamp)debhelper
 

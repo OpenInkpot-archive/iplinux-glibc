@@ -1,0 +1,42 @@
+#!/bin/sh
+
+if [ $# -ne 1 ]; then
+    echo "Usage: debian/source/prepare <mode>"
+    echo
+    echo "  <mode> = dev-headers | bootstrap | final"
+    exit 1
+fi
+
+MODE=$1
+
+case $MODE in
+    dev-headers)
+        DEB_CROSS_BOOTSTRAP=yes
+        ;;
+    bootstrap)
+        LIBC6_PROVIDES=libc6-bootstrap
+        GLIBC_BUILD_DEPENDS=", gcc-bootstrap-toolchain"
+        DEB_CROSS_BOOTSTRAP=second
+        ;;
+    final)
+        GLIBC_BUILD_DEPENDS=", gcc-toolchain"
+        ;;
+    *)
+        echo "Unknown mode: $MODE"
+        exit 1
+        ;;
+esac
+
+sed -e "s/__LIBC6_PROVIDES__/${LIBC6_PROVIDES}/g" \
+    -e "s/__GLIBC_BUILD_DEPENDS__/${GLIBC_BUILD_DEPENDS}/g" \
+    < debian/control.in > debian/control
+
+sed -e "s/__DEB_CROSS_BOOTSTRAP__/${DEB_CROSS_BOOTSTRAP}/g" \
+    < debian/rules.in > debian/rules
+
+sleep 1
+
+DIR=$(basename $(pwd))
+(cd ..; dpkg-source -b "$DIR")
+
+rm debian/control debian/rules

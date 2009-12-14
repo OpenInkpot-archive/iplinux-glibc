@@ -37,9 +37,11 @@ include debian/shlibver
 shlib_dep = $(libc) (>= $(shlib_dep_ver))
 
 # The version of the C library that locales needs for its format.
-include debian/locales-depver
+#include debian/locales-depver
 
 # Beyond here you shouldn't need to customise anything:
+
+DEB_CROSS_BOOTSTRAP := __DEB_CROSS_BOOTSTRAP__
 
 SHELL                 ?= =/bin/sh -e
 DEB_HOST_ARCH         ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
@@ -55,7 +57,7 @@ DEB_BUILD_GNU_SYSTEM  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_SYSTEM)
 DEB_HOST_GNU_CPU_ALT  ?=
 DEB_HOST_GNU_TYPE_ALT ?=
 
-DEB_SOURCE_PACKAGE := $(strip $(shell egrep '^Source: ' debian/control | cut -f 2 -d ':'))
+#DEB_SOURCE_PACKAGE := $(strip $(shell egrep '^Source: ' debian/control | cut -f 2 -d ':'))
 
 DEB_VERSION := $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
 
@@ -190,12 +192,12 @@ clean:: debhelper-clean
 	rm -rf debian/include
 
 # Required Debian targets
-binary-indep: build testroot debian/control $(build-tree) \
+binary-indep: build testroot $(build-tree) \
 	$(patsubst %,$(stamp)install_%,$(GLIBC_PASSES)) \
 	$(patsubst %,$(stamp)binaryinst_%,$(DEB_INDEP_REGULAR_PACKAGES))
 # NOTE: Putting install_ stamps before binaryinst_ stamps in the list is the
 # wrong way to represent dependencies.  Fix this.
-binary-arch: build testroot debian/control $(build-tree) \
+binary-arch: build testroot $(build-tree) \
 	$(patsubst %,$(stamp)install_%,$(GLIBC_PASSES)) \
 	$(patsubst %,$(stamp)binaryinst_%,$(DEB_ARCH_REGULAR_PACKAGES)) \
 	$(patsubst %,$(stamp)binaryinst_%,$(DEB_UDEB_PACKAGES))

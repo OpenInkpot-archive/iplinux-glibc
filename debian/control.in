@@ -1,19 +1,53 @@
-Source: @glibc@
+Source: glibc
 Section: core
 Priority: required
+Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
 Build-Depends: make (>= 3.80), dpkg-dev (>= 1.13.5), bzip2, lzma, file, quilt,
  sed (>= 4.0.5-4), gawk, debhelper (>= 5.0), binutils (>= 2.17cvs20070426), linux-libc-dev
 XCS-Cross-Host-Build-Depends: make (>= 3.80), dpkg-dev (>= 1.13.5), bzip2, lzma, file, quilt, sed (>= 4.0.5-4), gawk, debhelper (>= 5.0), build-essential
-XCS-Cross-Build-Depends: linux-libc-dev
+XCS-Cross-Build-Depends: linux-libc-dev, binutils-toolchain __GLIBC_BUILD_DEPENDS__
 XCS-Needs-Cross-Toolchain: no
-Build-Depends-Indep: perl, po-debconf (>= 1.0)
-Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
-Standards-Version: 3.8.0
+Standards-Version: 3.8.3
+
+Package: libc6
+Architecture: any
+Priority: required
+Description: GNU C Library: Shared libraries
+ Contains the standard libraries that are used by nearly all programs on
+ the system. This package includes shared versions of the standard C library
+ and the standard math library, as well as many others.
+
+Package: libc6-dev
+Architecture: any
+Section: libdevel
+Priority: optional
+Depends: libc6 (= ${binary:Version})
+Provides: __LIBC6_PROVIDES__
+Description: GNU C Library: Development Libraries and Header Files
+ Contains the symlinks, headers, and object files needed to compile
+ and link programs which use the standard C library.
+
+Package: libc6-dbg
+Architecture: any
+Section: debug
+Priority: optional
+Depends: libc6 (= ${binary:Version})
+Description: GNU C Library: Development Libraries and Header Files
+ Contains the symlinks, headers, and object files needed to compile
+ and link programs which use the standard C library.
+
+Package: libc6-dev-headers
+Architecture: any
+Section: libdevel
+Priority: extra
+Description: GNU C Library: Bootstrap Header Files
+ Contains the headers required for bootstrapping the toolchain, in particular,
+ building the bootstrap cross-gcc.
 
 Package: locales
 Architecture: all
 Priority: standard
-Depends: ${locale:Depends}
+Depends: libc6
 Description: GNU C Library: National Language (locale) data [support]
  Machine-readable data files, shared objects and programs used by the
  C library for localization (l10n) and internationalization (i18n) support.
@@ -73,4 +107,3 @@ Architecture: any
 Priority: optional
 Description: GNU C Library: utilities
  catchsegv and ldd
-
