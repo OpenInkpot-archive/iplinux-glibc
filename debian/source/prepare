@@ -27,6 +27,8 @@ case $MODE in
         ;;
 esac
 
+rm debian/control debian/rules
+
 sed -e "s/__LIBC6_PROVIDES__/${LIBC6_PROVIDES}/g" \
     -e "s/__GLIBC_BUILD_DEPENDS__/${GLIBC_BUILD_DEPENDS}/g" \
     < debian/control.in > debian/control
@@ -34,9 +36,3 @@ sed -e "s/__LIBC6_PROVIDES__/${LIBC6_PROVIDES}/g" \
 sed -e "s/__DEB_CROSS_BOOTSTRAP__/${DEB_CROSS_BOOTSTRAP}/g" \
     < debian/rules.in > debian/rules
 
-sleep 1
-
-DIR=$(basename $(pwd))
-(cd ..; dpkg-source -b "$DIR")
-
-rm debian/control debian/rules
