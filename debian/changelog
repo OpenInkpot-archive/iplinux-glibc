@@ -1,3 +1,13 @@
+glibc (2.7-16.ip11) zelazny; urgency=low
+
+  [ Mikhail Gusarov ]
+  * Added Turkish locale (OI#817)
+  
+  [ Alexey Zaitsev ]
+  * Updated debian/source/prepare to work with newer mtkpkg.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 05 Aug 2010 17:09:58 +0700
+
 glibc (2.7-16.ip10) zelazny; urgency=low
 
   * Add build-essential to build-depends
