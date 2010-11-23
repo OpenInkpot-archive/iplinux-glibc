@@ -1,3 +1,9 @@
+glibc (2.7-16.ip12) zelazny; urgency=low
+
+  * genlocale: lzmacat is renamed to lzcat
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Tue, 23 Nov 2010 06:10:45 +0300
+
 glibc (2.7-16.ip11) zelazny; urgency=low
 
   [ Mikhail Gusarov ]
