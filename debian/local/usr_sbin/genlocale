@@ -15,4 +15,4 @@ if ! [ -e "$LOCALES_ARCHIVE_DIR/$1" ]; then
 fi
 
 mkdir -p $LOCALES_DIR
-lzmacat "$LOCALES_ARCHIVE_DIR/$1" | tar -x -C $LOCALES_DIR "$1.UTF-8"
+lzcat "$LOCALES_ARCHIVE_DIR/$1" | tar -x -C $LOCALES_DIR "$1.UTF-8"
