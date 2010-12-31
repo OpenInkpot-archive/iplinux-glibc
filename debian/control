@@ -1,0 +1,109 @@
+Source: glibc
+Section: core
+Priority: required
+Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
+Build-Depends: make (>= 3.80), dpkg-dev (>= 1.13.5), bzip2, lzma, file, quilt,
+ sed (>= 4.0.5-4), gawk, debhelper (>= 5.0), binutils (>= 2.17cvs20070426), linux-libc-dev
+XCS-Cross-Host-Build-Depends: make (>= 3.80), dpkg-dev (>= 1.13.5), bzip2, lzma, file, quilt, sed (>= 4.0.5-4), gawk, debhelper (>= 5.0), build-essential
+XCS-Cross-Build-Depends: linux-libc-dev, binutils-toolchain , gcc-toolchain
+XCS-Needs-Cross-Toolchain: no
+Standards-Version: 3.8.3
+
+Package: libc6
+Architecture: any
+Priority: required
+Description: GNU C Library: Shared libraries
+ Contains the standard libraries that are used by nearly all programs on
+ the system. This package includes shared versions of the standard C library
+ and the standard math library, as well as many others.
+
+Package: libc6-dev
+Architecture: any
+Section: libdevel
+Priority: optional
+Depends: libc6 (= ${binary:Version})
+Provides: 
+Description: GNU C Library: Development Libraries and Header Files
+ Contains the symlinks, headers, and object files needed to compile
+ and link programs which use the standard C library.
+
+Package: libc6-dbg
+Architecture: any
+Section: debug
+Priority: optional
+Depends: libc6 (= ${binary:Version})
+Description: GNU C Library: Development Libraries and Header Files
+ Contains the symlinks, headers, and object files needed to compile
+ and link programs which use the standard C library.
+
+Package: libc6-dev-headers
+Architecture: any
+Section: libdevel
+Priority: extra
+Description: GNU C Library: Bootstrap Header Files
+ Contains the headers required for bootstrapping the toolchain, in particular,
+ building the bootstrap cross-gcc.
+
+Package: locales
+Architecture: all
+Priority: standard
+Depends: libc6
+Description: GNU C Library: National Language (locale) data [support]
+ Machine-readable data files, shared objects and programs used by the
+ C library for localization (l10n) and internationalization (i18n) support.
+
+Package: gconv-data-basic
+Architecture: any
+Priority: extra
+Depends: libc6-iconv
+Description: GNU C Library: recoding tables (basic)
+ Data tables used by C library iconv for converting text between various
+ encodings.
+ .
+ This package contains tables for widely used encodings except ones for oriental
+ languages. See the gconv-data-oriental package for those.
+
+Package: gconv-data-ebcdic
+Architecture: any
+Priority: extra
+Depends: gconv-data-basic
+Description: GNU C Library: recoding tables (EBCDIC)
+ Data tables used by C library iconv for converting text between various
+ encodings.
+ .
+ This package contains tables for EBCDIC encodings.
+
+Package: gconv-data-oriental
+Architecture: any
+Priority: extra
+Depends: gconv-data-basic
+Description: GNU C Library: recoding tables (oriental)
+ Data tables used by C library iconv for converting text between various
+ encodings.
+ .
+ This package contains tables for encodings for oriental languages: Chinese,
+ Japanese, Korean.
+
+Package: libc6-iconv
+Architecture: any
+Priority: optional
+Description: GNU C Library: iconv utilities
+ Command-line iconv(1) utility and iconv cache file generator.
+
+Package: libc6-tz
+Architecture: any
+Priority: optional
+Description: GNU C Library: timezone utilities
+ Timezone description compiler and dumper.
+
+Package: libc6-rpc
+Architecture: any
+Priority: optional
+Description: GNU C Library: RPC utilities
+ RPC info tool and blacklisted ports for RPC.
+
+Package: libc6-utils
+Architecture: any
+Priority: optional
+Description: GNU C Library: utilities
+ catchsegv and ldd
